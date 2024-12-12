@@ -8,7 +8,7 @@ const Login = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const navigate = useNavigate(); // Move useNavigate outside the handleLogin function
+    const navigate = useNavigate();
     
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -22,7 +22,7 @@ const Login = () => {
         setLoading(true);
 
         try {
-            const response = await fetch('http://localhost:8000/user/login', {
+            const response = await fetch('https://backend-cq2x.onrender.com/user/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -40,8 +40,7 @@ const Login = () => {
             localStorage.setItem('token', data.data.token);
             sessionStorage.setItem('userId',data.data.user.id)
 
-            // Navigate to the homepage or another route
-            navigate('/'); // Replace '/' with your desired route
+            navigate('/'); 
 
             console.log('Login successful:', data);
         } catch (err) {

@@ -15,7 +15,7 @@ const Home = () => {
         const fetchData = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await fetch('http://localhost:8000/task/get', {
+                const response = await fetch('https://backend-cq2x.onrender.com/task/get', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ const Home = () => {
                 });
 
                 if (!response.ok) {
-                    throw new Error('Failed to fetch data');
+                    throw new Error('Please Login Again, Your token is expire');
                 }
 
                 const result = await response.json();
@@ -61,7 +61,7 @@ const Home = () => {
     
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:8000/task/delete/${id}`, {
+            const response = await fetch(`https://backend-cq2x.onrender.com/task/delete/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -75,7 +75,7 @@ const Home = () => {
             alert('Task deleted successfully!');
             
             // Reload the data after deletion
-            const fetchResponse = await fetch('http://localhost:8000/task/get', {
+            const fetchResponse = await fetch('https://backend-cq2x.onrender.com/task/get', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

@@ -4,7 +4,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 const Notes = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { id } = useParams(); // Get the task ID from the URL
+    const { id } = useParams();
     const [formData, setFormData] = useState({
         title: '',
         content: '',
@@ -12,12 +12,11 @@ const Notes = () => {
     });
     const [loading, setLoading] = useState(true);
 
-    // Fetch task details if editing
     const getTask = async (taskId) => {
-        const token = localStorage.getItem('token'); // Ensure token is available here
+        const token = localStorage.getItem('token');
         try {
             console.log("Fetching task details for ID:", taskId);
-            const response = await fetch(`http://localhost:8000/task/${taskId}`, {
+            const response = await fetch(`https://backend-cq2x.onrender.com/task/${taskId}`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -41,31 +40,28 @@ const Notes = () => {
 
     useEffect(() => {
         if (id) {
-            // Wrap the async function inside useEffect
             const fetchTaskDetails = async () => {
                 await getTask(id);
             };
             fetchTaskDetails();
         } else {
-            setLoading(false); // Not editing, so no need to fetch
+            setLoading(false); 
         }
     }, [id]);
 
-    // Handle input changes
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    // Handle form submission for create/update
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
             const url = id
-                ? `http://localhost:8000/task/update/${id}` // Update existing task
-                : `http://localhost:8000/task/add`; // Create new task
-            const method = id ? 'PUT' : 'POST'; // Determine the HTTP method
+                ? `https://backend-cq2x.onrender.com/task/update/${id}` 
+                : `https://backend-cq2x.onrender.com/task/add`; 
+            const method = id ? 'PUT' : 'POST'; 
 
             const response = await fetch(url, {
                 method,
@@ -80,14 +76,14 @@ const Notes = () => {
                 throw new Error(id ? 'Failed to update task' : 'Failed to create task');
             }
 
-            navigate('/'); // Navigate back to Home after success
+            navigate('/'); 
         } catch (err) {
             console.error(err.message);
         }
     };
 
     if (loading) {
-        return <div>Loading...</div>; // Show a loading state while fetching task details
+        return <div>Loading...</div>; 
     }
 
     return (

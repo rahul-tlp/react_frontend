@@ -25,7 +25,7 @@ const Signup = () => {
 
     const getDetails = async(id)=>{
         try {
-            const response = await fetch(`http://localhost:8000/user/get/${id}`,{
+            const response = await fetch(`https://backend-cq2x.onrender.com/user/get/${id}`,{
                 method:'GET',
             });
             const details = await response.json()
@@ -33,7 +33,7 @@ const Signup = () => {
                 name:details.user.name,
                 email:details.user.email,
                 mobile:details.user.mobile,
-                password:details.user.password,
+                password:'',
                 gender:details.user.gender || "male",
             })
         } catch (error) {
@@ -70,7 +70,7 @@ const Signup = () => {
         setLoading(true);
 
         try {
-            const response = await fetch(isUpdate ? `http://localhost:8000/user/update/${UserId}` : 'http://localhost:8000/user/add', {
+            const response = await fetch(isUpdate ? `https://backend-cq2x.onrender.com/user/update/${UserId}` : 'https://backend-cq2x.onrender.com/user/add', {
                 method: UserId ? 'PUT' : 'POST',
                 headers: {
                     'Content-Type': 'application/json',
